@@ -5,6 +5,7 @@ using StockTraderRI.Infrastructure;
 using StockTraderRI.Infrastructure.Interfaces;
 using StockTraderRI.Modules.Position.Controllers;
 using StockTraderRI.Modules.Position.Interfaces;
+using StockTraderRI.Modules.Position.Orders;
 using StockTraderRI.Modules.Position.PositionSummary;
 using StockTraderRI.Modules.Position.Services;
 
@@ -14,7 +15,8 @@ namespace StockTraderRI.Modules.Position
     {
         private readonly IUnityContainer container;
         private readonly IRegionManager regionManager;
-        private OrdersController _ordersController;
+        // 21/07/2016
+        //private OrdersController _ordersController;
 
         public PositionModule(IUnityContainer container, IRegionManager regionManager)
         {
@@ -32,7 +34,14 @@ namespace StockTraderRI.Modules.Position
             this.container.RegisterType<IPositionPieChartViewModel, PositionPieChartViewModel>();
             this.regionManager.RegisterViewWithRegion(RegionNames.MainRegion,
                                                        () => this.container.Resolve<PositionSummaryView>());
-            this._ordersController = this.container.Resolve<OrdersController>();
+
+            // 21/07/2016 : Line commented out, as there were two instances of OrdersController 
+            //this._ordersController = this.container.Resolve<OrdersController>();
+
+            // 20/07/2016: These three lines added.
+            this.container.RegisterType<IOrdersView, OrdersView>();
+            this.container.RegisterType<IOrderDetailsViewModel, OrderDetailsViewModel>();
+            this.container.RegisterType<IOrderCompositeViewModel, OrderCompositeViewModel>();
         }
 
     }
