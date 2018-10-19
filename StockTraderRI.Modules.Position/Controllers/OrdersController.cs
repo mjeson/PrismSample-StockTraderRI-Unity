@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using CommonServiceLocator;
 using Prism.Commands;
 using Prism.Regions;
-using Microsoft.Practices.ServiceLocation;
 using StockTraderRI.Infrastructure;
 using StockTraderRI.Infrastructure.Interfaces;
 using StockTraderRI.Infrastructure.Models;
@@ -17,9 +17,9 @@ namespace StockTraderRI.Modules.Position.Controllers
 {
     public class OrdersController : IOrdersController
     {
-        private IRegionManager _regionManager;
         private readonly StockTraderRICommandProxy commandProxy;
         private IAccountPositionService _accountPositionService;
+        private IRegionManager _regionManager;
 
         public OrdersController(IRegionManager regionManager, StockTraderRICommandProxy commandProxy, IAccountPositionService accountPositionService)
         {
@@ -38,51 +38,13 @@ namespace StockTraderRI.Modules.Position.Controllers
             commandProxy.SubmitAllOrdersCommand.RegisterCommand(SubmitAllVoteOnlyCommand);
         }
 
-        void OnSellExecuted(string parameter)
-        {
-            StartOrder(parameter, TransactionType.Sell);
-        }
+        public DelegateCommand<string> BuyCommand { get; private set; }
 
-        void OnBuyExecuted(string parameter)
-        {
-            StartOrder(parameter, TransactionType.Buy);
-        }
+        public DelegateCommand<string> SellCommand { get; private set; }
 
-        virtual protected bool SubmitAllCanExecute()
-        {
-            Dictionary<string, long> sellOrderShares = new Dictionary<string, long>();
+        public DelegateCommand SubmitAllVoteOnlyCommand { get; private set; }
 
-            if (OrderModels.Count == 0) return false;
-
-            foreach (var order in OrderModels)
-            {
-                if (order.TransactionInfo.TransactionType == TransactionType.Sell)
-                {
-                    string tickerSymbol = order.TransactionInfo.TickerSymbol.ToUpper(CultureInfo.CurrentCulture);
-                    if (!sellOrderShares.ContainsKey(tickerSymbol))
-                        sellOrderShares.Add(tickerSymbol, 0);
-
-                    //populate dictionary with total shares bought or sold by tickersymbol
-                    sellOrderShares[tickerSymbol] += order.Shares;
-                }
-            }
-
-            IList<AccountPosition> positions = _accountPositionService.GetAccountPositions();
-
-            foreach (string key in sellOrderShares.Keys)
-            {
-                AccountPosition position =
-                    positions.FirstOrDefault(
-                        x => String.Compare(x.TickerSymbol, key, StringComparison.CurrentCultureIgnoreCase) == 0);
-                if (position == null || position.Shares < sellOrderShares[key])
-                {
-                    //trying to sell more shares than we own
-                    return false;
-                }
-            }
-
-            return true;
-        }
+        private List<IOrderCompositeViewModel> OrderModels { get; set; }
 
         virtual protected void StartOrder(string tickerSymbol, TransactionType transactionType)
         {
@@ -122,6 +84,52 @@ namespace StockTraderRI.Modules.Position.Controllers
             ordersRegion.Activate(orderCompositeViewModel);
         }
 
+        virtual protected bool SubmitAllCanExecute()
+        {
+            Dictionary<string, long> sellOrderShares = new Dictionary<string, long>();
+
+            if (OrderModels.Count == 0) return false;
+
+            foreach (var order in OrderModels)
+            {
+                if (order.TransactionInfo.TransactionType == TransactionType.Sell)
+                {
+                    string tickerSymbol = order.TransactionInfo.TickerSymbol.ToUpper(CultureInfo.CurrentCulture);
+                    if (!sellOrderShares.ContainsKey(tickerSymbol))
+                        sellOrderShares.Add(tickerSymbol, 0);
+
+                    //populate dictionary with total shares bought or sold by tickersymbol
+                    sellOrderShares[tickerSymbol] += order.Shares;
+                }
+            }
+
+            IList<AccountPosition> positions = _accountPositionService.GetAccountPositions();
+
+            foreach (string key in sellOrderShares.Keys)
+            {
+                AccountPosition position =
+                    positions.FirstOrDefault(
+                        x => String.Compare(x.TickerSymbol, key, StringComparison.CurrentCultureIgnoreCase) == 0);
+                if (position == null || position.Shares < sellOrderShares[key])
+                {
+                    //trying to sell more shares than we own
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        private void OnBuyExecuted(string parameter)
+        {
+            StartOrder(parameter, TransactionType.Buy);
+        }
+
+        private void OnSellExecuted(string parameter)
+        {
+            StartOrder(parameter, TransactionType.Sell);
+        }
+
         private void RemoveOrdersView()
         {
             IRegion region = this._regionManager.Regions[RegionNames.ActionRegion];
@@ -146,15 +154,5 @@ namespace StockTraderRI.Modules.Position.Controllers
 
             region.Activate(ordersView);
         }
-
-        #region IOrdersController Members
-
-        public DelegateCommand<string> BuyCommand { get; private set; }
-        public DelegateCommand<string> SellCommand { get; private set; }
-        public DelegateCommand SubmitAllVoteOnlyCommand { get; private set; }
-
-        private List<IOrderCompositeViewModel> OrderModels { get; set; }
-
-        #endregion
     }
 }

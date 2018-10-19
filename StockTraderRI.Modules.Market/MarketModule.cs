@@ -1,10 +1,12 @@
 ﻿using Microsoft.Practices.Unity;
+using Prism.Ioc;
 using Prism.Modularity;
 using Prism.Regions;
 using StockTraderRI.Infrastructure;
 using StockTraderRI.Infrastructure.Interfaces;
 using StockTraderRI.Modules.Market.Services;
 using StockTraderRI.Modules.Market.TrendLine;
+using Unity;
 
 namespace StockTraderRI.Modules.Market
 {
@@ -24,9 +26,6 @@ namespace StockTraderRI.Modules.Market
 
         public void Initialize()
         {
-            this.container.RegisterType<IMarketFeedService, MarketFeedService>();
-            this.container.RegisterType<IMarketHistoryService, MarketHistoryService>();
-            this.container.RegisterType<TrendLineViewModel, TrendLineViewModel>();
             this.regionManager.RegisterViewWithRegion(RegionNames.ResearchRegion,
                                                        () => this.container.Resolve<TrendLineView>());
             //this._mainRegionController = this.container.Resolve<MainRegionController>();
@@ -34,6 +33,15 @@ namespace StockTraderRI.Modules.Market
             //                                           () => this.container.Resolve<EmployeeDetailsView>());
             //this.regionManager.RegisterViewWithRegion(RegionNames.TabRegion,
             //                                           () => this.container.Resolve<EmployeeProjectsView>());
+        }
+
+        public void OnInitialized(IContainerProvider containerProvider) => this.Initialize();
+
+        public void RegisterTypes(IContainerRegistry containerRegistry)
+        {
+            this.container.RegisterType<IMarketFeedService, MarketFeedService>();
+            this.container.RegisterType<IMarketHistoryService, MarketHistoryService>();
+            this.container.RegisterType<TrendLineViewModel, TrendLineViewModel>();
         }
     }
 }
