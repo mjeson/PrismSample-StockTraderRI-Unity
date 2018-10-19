@@ -6,6 +6,7 @@ using StockTraderRI.Infrastructure;
 using StockTraderRI.Infrastructure.Interfaces;
 using StockTraderRI.Modules.Position.Controllers;
 using StockTraderRI.Modules.Position.Interfaces;
+using StockTraderRI.Modules.Position.Orders;
 using StockTraderRI.Modules.Position.PositionSummary;
 using StockTraderRI.Modules.Position.Services;
 using Unity;
@@ -41,6 +42,11 @@ namespace StockTraderRI.Modules.Position
             this.container.RegisterType<IObservablePosition, ObservablePosition>();
             this.container.RegisterType<IPositionSummaryViewModel, PositionSummaryViewModel>();
             this.container.RegisterType<IPositionPieChartViewModel, PositionPieChartViewModel>();
+
+            this.container.RegisterType<IOrderCompositeViewModel, OrderCompositeViewModel>();
+            this.container.RegisterType<IOrderDetailsViewModel, OrderDetailsViewModel>();
+
+            this.container.RegisterType<IOrdersView, OrdersView>();
         }
     }
 }
