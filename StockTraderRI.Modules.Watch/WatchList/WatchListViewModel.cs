@@ -16,13 +16,14 @@ namespace StockTraderRI.Modules.Watch.WatchList
 {
     public class WatchListViewModel : BindableBase
     {
-        private readonly IMarketFeedService marketFeedService;
         private readonly IEventAggregator eventAggregator;
+        private readonly IMarketFeedService marketFeedService;
         private readonly IRegionManager regionManager;
         private readonly ObservableCollection<string> watchList;
+        private WatchItem currentWatchItem;
+        private string headerInfo;
         private ICommand removeWatchCommand;
         private ObservableCollection<WatchItem> watchListItems;
-        private WatchItem currentWatchItem;
 
         public WatchListViewModel(IWatchListService watchListService, IMarketFeedService marketFeedService, IRegionManager regionManager, IEventAggregator eventAggregator)
         {
@@ -52,19 +53,7 @@ namespace StockTraderRI.Modules.Watch.WatchList
             this.removeWatchCommand = new DelegateCommand<string>(this.RemoveWatch);
 
             this.watchListItems.CollectionChanged += this.WatchListItems_CollectionChanged;
-        }       
-
-        public ObservableCollection<WatchItem> WatchListItems
-        {
-            get
-            {
-                return this.watchListItems;
-            }
-
-            private set
-            {
-                SetProperty(ref this.watchListItems, value);
-            }
+            this.eventAggregator.GetEvent<AddWatchTickerSymbolEvent>().Subscribe(i => this.PopulateWatchItemsList(watchListService.RetrieveWatchList()));
         }
 
         public WatchItem CurrentWatchItem
@@ -84,9 +73,33 @@ namespace StockTraderRI.Modules.Watch.WatchList
             }
         }
 
-        public string HeaderInfo { get; set; }
+        public string HeaderInfo
+        {
+            get
+            {
+                return this.headerInfo;
+            }
+
+            set
+            {
+                SetProperty(ref this.headerInfo, value);
+            }
+        }
 
         public ICommand RemoveWatchCommand { get { return this.removeWatchCommand; } }
+
+        public ObservableCollection<WatchItem> WatchListItems
+        {
+            get
+            {
+                return this.watchListItems;
+            }
+
+            private set
+            {
+                SetProperty(ref this.watchListItems, value);
+            }
+        }
 
         private void MarketPricesUpdated(IDictionary<string, decimal> updatedPrices)
         {
@@ -102,11 +115,6 @@ namespace StockTraderRI.Modules.Watch.WatchList
                     watchItem.CurrentPrice = updatedPrices[watchItem.TickerSymbol];
                 }
             }
-        }
-
-        private void RemoveWatch(string tickerSymbol)
-        {
-            this.watchList.Remove(tickerSymbol);
         }
 
         private void PopulateWatchItemsList(IEnumerable<string> watchItemsList)
@@ -126,6 +134,11 @@ namespace StockTraderRI.Modules.Watch.WatchList
 
                 this.WatchListItems.Add(new WatchItem(tickerSymbol, currentPrice));
             }
+        }
+
+        private void RemoveWatch(string tickerSymbol)
+        {
+            this.watchList.Remove(tickerSymbol);
         }
 
         private void WatchListItems_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)

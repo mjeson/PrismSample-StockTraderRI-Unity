@@ -3,23 +3,28 @@ using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Windows.Input;
 using Prism.Commands;
+using Prism.Events;
+using StockTraderRI.Infrastructure;
 using StockTraderRI.Infrastructure.Interfaces;
 
 namespace StockTraderRI.Modules.Watch.Services
 {
     public class WatchListService : IWatchListService
     {
+        private readonly IEventAggregator eventAggregator;
         private readonly IMarketFeedService marketFeedService;
 
-        private ObservableCollection<string> WatchItems { get; set; }
-
-        public WatchListService(IMarketFeedService marketFeedService)
+        public WatchListService(IMarketFeedService marketFeedService, IEventAggregator eventAggregator)
         {
             this.marketFeedService = marketFeedService;
+            this.eventAggregator = eventAggregator;
             WatchItems = new ObservableCollection<string>();
 
             AddWatchCommand = new DelegateCommand<string>(AddWatch);
         }
+
+        public ICommand AddWatchCommand { get; set; }
+        private ObservableCollection<string> WatchItems { get; set; }
 
         public ObservableCollection<string> RetrieveWatchList()
         {
@@ -36,11 +41,10 @@ namespace StockTraderRI.Modules.Watch.Services
                     if (marketFeedService.SymbolExists(upperCasedTrimmedSymbol))
                     {
                         WatchItems.Add(upperCasedTrimmedSymbol);
+                        // this.eventAggregator.GetEvent<AddWatchTickerSymbolEvent>().Publish(true);
                     }
                 }
             }
         }
-
-        public ICommand AddWatchCommand { get; set; }
     }
 }
