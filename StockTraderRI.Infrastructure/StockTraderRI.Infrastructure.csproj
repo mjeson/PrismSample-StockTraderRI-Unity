@@ -89,6 +89,7 @@
     <Compile Include="Interfaces\IMarketFeedService.cs" />
     <Compile Include="Interfaces\IMarketHistoryService.cs" />
     <Compile Include="Interfaces\INewsFeedService.cs" />
+    <Compile Include="Interfaces\IStockTraderRICommandProxy.cs" />
     <Compile Include="Messaging\MarketPricesUpdatedEvent.cs" />
     <Compile Include="Models\AccountPosition.cs" />
     <Compile Include="Models\AccountPositionEventArgs.cs" />
@@ -112,6 +113,7 @@
     <Compile Include="RegionNames.cs" />
     <Compile Include="Messaging\TickerSymbolSelectedEvent.cs" />
     <Compile Include="ReturnKey.cs" />
+    <Compile Include="StockTraderRICommandProxy.cs" />
     <Compile Include="StockTraderRICommands.cs" />
     <Compile Include="TransactionType.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">

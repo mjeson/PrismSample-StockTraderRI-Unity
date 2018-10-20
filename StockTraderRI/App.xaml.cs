@@ -1,6 +1,8 @@
 ﻿using Prism.Ioc;
 using Prism.Modularity;
 using Prism.Unity;
+using StockTraderRI.Infrastructure;
+using StockTraderRI.Infrastructure.Interfaces;
 using System.Windows;
 
 namespace StockTraderRI
@@ -22,6 +24,8 @@ namespace StockTraderRI
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
+            // containerRegistry.RegisterSingleton(typeof(StockTraderRI.Infrastructure.StockTraderRICommandProxy));
+            containerRegistry.RegisterSingleton<IStockTraderRICommandProxy, StockTraderRICommandProxy>();
         }
     }
 }

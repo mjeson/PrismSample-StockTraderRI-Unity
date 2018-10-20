@@ -1,5 +1,6 @@
 using System;
 using System.Windows.Input;
+using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
 using StockTraderRI.Infrastructure;
@@ -9,11 +10,8 @@ namespace StockTraderRI.Modules.Position.PositionSummary
 {
     public class PositionSummaryViewModel : BindableBase, IPositionSummaryViewModel
     {
-        private PositionSummaryItem currentPositionSummaryItem;
-
         private readonly IEventAggregator eventAggregator;
-
-        public IObservablePosition Position { get; private set; }
+        private PositionSummaryItem currentPositionSummaryItem;
 
         public PositionSummaryViewModel(IOrdersController ordersController, IEventAggregator eventAggregator, IObservablePosition observablePosition)
         {
@@ -31,14 +29,8 @@ namespace StockTraderRI.Modules.Position.PositionSummary
             this.CurrentPositionSummaryItem = new PositionSummaryItem("FAKEINDEX", 0, 0, 0);
         }
 
+        public ICommand AddToWatchCommand { get; private set; }
         public ICommand BuyCommand { get; private set; }
-
-        public ICommand SellCommand { get; private set; }
-
-        public string HeaderInfo
-        {
-            get { return "POSITION"; }
-        }
 
         public PositionSummaryItem CurrentPositionSummaryItem
         {
@@ -55,5 +47,13 @@ namespace StockTraderRI.Modules.Position.PositionSummary
                 }
             }
         }
+
+        public string HeaderInfo
+        {
+            get { return "POSITION"; }
+        }
+
+        public IObservablePosition Position { get; private set; }
+        public ICommand SellCommand { get; private set; }
     }
 }

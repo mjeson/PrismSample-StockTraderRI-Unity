@@ -20,47 +20,53 @@ namespace StockTraderRI.Modules.Watch.WatchList
         private readonly IEventAggregator eventAggregator;
         private readonly IMarketFeedService marketFeedService;
         private readonly IRegionManager regionManager;
-        private readonly ObservableCollection<string> watchList;
+        private readonly IStockTraderRICommandProxy stockTraderRICommandProxy;
+        private readonly IWatchListService watchListService;
         private WatchItem currentWatchItem;
         private string headerInfo;
         private ICommand removeWatchCommand;
+        private ObservableCollection<string> watchList;
         private ObservableCollection<WatchItem> watchListItems;
 
-        public WatchListViewModel(IWatchListService watchListService, IMarketFeedService marketFeedService, IRegionManager regionManager, IEventAggregator eventAggregator)
+        public WatchListViewModel(IStockTraderRICommandProxy stockTraderRICommandProxy, IWatchListService watchListService, IMarketFeedService marketFeedService, IRegionManager regionManager, IEventAggregator eventAggregator)
         {
             if (watchListService == null)
             {
                 throw new ArgumentNullException("watchListService");
             }
-
+            if (stockTraderRICommandProxy == null)
+            {
+                throw new ArgumentNullException("stockTraderRICommandProxy");
+            }
             if (eventAggregator == null)
             {
                 throw new ArgumentNullException("eventAggregator");
             }
 
+            //Init Prperties
+            this.stockTraderRICommandProxy = stockTraderRICommandProxy;
+            this.eventAggregator = eventAggregator;
+            this.watchListService = watchListService;
             this.HeaderInfo = Resources.WatchListTitle;
             this.WatchListItems = new ObservableCollection<WatchItem>();
-
             this.marketFeedService = marketFeedService;
             this.regionManager = regionManager;
 
-            this.watchList = watchListService.RetrieveWatchList();
-            // this.watchList.CollectionChanged += delegate {
-            // this.PopulateWatchItemsList(this.watchList); };
-            this.PopulateWatchItemsList(this.watchList);
-
-            this.eventAggregator = eventAggregator;
-            this.eventAggregator.GetEvent<MarketPricesUpdatedEvent>().Subscribe(this.MarketPricesUpdated, ThreadOption.UIThread);
-
+            // Setup Commands
             this.removeWatchCommand = new DelegateCommand<string>(this.RemoveWatch);
-            AddWatchCommand = new DelegateCommand<string>(AddWatch);
+            // this.AddWatchCommand = new DelegateCommand<string>(AddWatch);
+            this.stockTraderRICommandProxy.AddToWatchListCommand.RegisterCommand(this.watchListService.AddWatchCommand);
 
+            //Setup Subscribers
+            this.eventAggregator.GetEvent<MarketPricesUpdatedEvent>().Subscribe(this.MarketPricesUpdated, ThreadOption.UIThread);
             this.eventAggregator.GetEvent<AddWatchTickerSymbolEvent>().Subscribe(i =>
             {
-                var watchList = watchListService.RetrieveWatchList();
-                this.PopulateWatchItemsList(watchList);
+                this.PopulateWatchItemsList(watchListService.RetrieveWatchList());
             }, ThreadOption.UIThread, true
            );
+
+            // Populate Watch Items to views
+            this.PopulateWatchItemsList(watchListService.RetrieveWatchList());
         }
 
         public ICommand AddWatchCommand { get; set; }
@@ -99,24 +105,22 @@ namespace StockTraderRI.Modules.Watch.WatchList
 
         public ObservableCollection<WatchItem> WatchListItems
         {
-            get
-            {
-                return this.watchListItems;
-            }
+            get => this.watchListItems;
 
-            private set
+            set
             {
                 SetProperty(ref this.watchListItems, value);
             }
         }
 
-        private void AddWatch(string tickerSymbol)
-        {
-            if (!String.IsNullOrEmpty(tickerSymbol))
-            {
-                string upperCasedTrimmedSymbol = tickerSymbol.ToUpper(CultureInfo.InvariantCulture).Trim();
-            }
-        }
+        //private void AddWatch(string tickerSymbol)
+        //{
+        //    if (!String.IsNullOrEmpty(tickerSymbol))
+        //    {
+        //        string upperCasedTrimmedSymbol = tickerSymbol.ToUpper(CultureInfo.InvariantCulture).Trim();
+        //        this.PopulateWatchItemsList(watchListService.RetrieveWatchList());
+        //    }
+        //}
 
         private void MarketPricesUpdated(IDictionary<string, decimal> updatedPrices)
         {
@@ -158,12 +162,12 @@ namespace StockTraderRI.Modules.Watch.WatchList
             this.watchList.Remove(tickerSymbol);
         }
 
-        private void WatchListItems_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            if (e.Action == NotifyCollectionChangedAction.Add)
-            {
-                regionManager.Regions[RegionNames.MainRegion].RequestNavigate("/WatchListView", nr => { });
-            }
-        }
+        //private void WatchListItems_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        //{
+        //    if (e.Action == NotifyCollectionChangedAction.Add)
+        //    {
+        //        regionManager.Regions[RegionNames.MainRegion].RequestNavigate("/WatchListView", nr => { });
+        //    }
+        //}
     }
 }

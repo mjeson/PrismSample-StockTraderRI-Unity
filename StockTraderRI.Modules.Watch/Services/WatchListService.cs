@@ -46,6 +46,9 @@ namespace StockTraderRI.Modules.Watch.Services
                         this.eventAggregator.GetEvent<AddWatchTickerSymbolEvent>().Publish(true);
                     }
                 }
+                else
+                {
+                }
             }
         }
     }
