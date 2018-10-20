@@ -102,7 +102,6 @@
     </Compile>
     <Compile Include="Resources\ResourceNames.cs" />
     <Compile Include="ShellViewModel.cs" />
-    <Compile Include="StockTraderRIBootstrapper.cs" />
     <Compile Include="VisibilityToStarHeightConverter.Desktop.cs" />
     <Page Include="Controls\RoundedBox.xaml">
       <SubType>Designer</SubType>

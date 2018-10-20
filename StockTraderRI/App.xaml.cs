@@ -7,14 +7,9 @@ namespace StockTraderRI
 {
     public partial class App : PrismApplication
     {
-        protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
+        protected override IModuleCatalog CreateModuleCatalog()
         {
-            base.ConfigureModuleCatalog(moduleCatalog);
-
-            moduleCatalog.AddModule(typeof(StockTraderRI.Modules.Market.MarketModule));
-            moduleCatalog.AddModule(typeof(StockTraderRI.Modules.Position.PositionModule));
-            moduleCatalog.AddModule(typeof(StockTraderRI.Modules.Watch.WatchModule));
-            moduleCatalog.AddModule(typeof(StockTraderRI.Modules.News.NewsModule));
+            return new ConfigurationModuleCatalog();
         }
 
         protected override Window CreateShell()
