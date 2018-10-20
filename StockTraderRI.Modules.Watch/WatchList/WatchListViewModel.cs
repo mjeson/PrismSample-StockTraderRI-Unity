@@ -11,6 +11,7 @@ using Prism.Events;
 using Prism.Regions;
 using StockTraderRI.Infrastructure.Interfaces;
 using StockTraderRI.Modules.Watch.Properties;
+using System.Globalization;
 
 namespace StockTraderRI.Modules.Watch.WatchList
 {
@@ -44,17 +45,25 @@ namespace StockTraderRI.Modules.Watch.WatchList
             this.regionManager = regionManager;
 
             this.watchList = watchListService.RetrieveWatchList();
-            this.watchList.CollectionChanged += delegate { this.PopulateWatchItemsList(this.watchList); };
+            // this.watchList.CollectionChanged += delegate {
+            // this.PopulateWatchItemsList(this.watchList); };
             this.PopulateWatchItemsList(this.watchList);
 
             this.eventAggregator = eventAggregator;
             this.eventAggregator.GetEvent<MarketPricesUpdatedEvent>().Subscribe(this.MarketPricesUpdated, ThreadOption.UIThread);
 
             this.removeWatchCommand = new DelegateCommand<string>(this.RemoveWatch);
+            AddWatchCommand = new DelegateCommand<string>(AddWatch);
 
-            this.watchListItems.CollectionChanged += this.WatchListItems_CollectionChanged;
-            this.eventAggregator.GetEvent<AddWatchTickerSymbolEvent>().Subscribe(i => this.PopulateWatchItemsList(watchListService.RetrieveWatchList()));
+            this.eventAggregator.GetEvent<AddWatchTickerSymbolEvent>().Subscribe(i =>
+            {
+                var watchList = watchListService.RetrieveWatchList();
+                this.PopulateWatchItemsList(watchList);
+            }, ThreadOption.UIThread, true
+           );
         }
+
+        public ICommand AddWatchCommand { get; set; }
 
         public WatchItem CurrentWatchItem
         {
@@ -98,6 +107,14 @@ namespace StockTraderRI.Modules.Watch.WatchList
             private set
             {
                 SetProperty(ref this.watchListItems, value);
+            }
+        }
+
+        private void AddWatch(string tickerSymbol)
+        {
+            if (!String.IsNullOrEmpty(tickerSymbol))
+            {
+                string upperCasedTrimmedSymbol = tickerSymbol.ToUpper(CultureInfo.InvariantCulture).Trim();
             }
         }
 

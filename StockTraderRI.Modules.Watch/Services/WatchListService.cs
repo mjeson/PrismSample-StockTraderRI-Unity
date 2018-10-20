@@ -21,9 +21,11 @@ namespace StockTraderRI.Modules.Watch.Services
             WatchItems = new ObservableCollection<string>();
 
             AddWatchCommand = new DelegateCommand<string>(AddWatch);
+            //WatchItems.CollectionChanged += (s, e) => this.eventAggregator.GetEvent<AddWatchTickerSymbolEvent>().Publish(true);
         }
 
         public ICommand AddWatchCommand { get; set; }
+
         private ObservableCollection<string> WatchItems { get; set; }
 
         public ObservableCollection<string> RetrieveWatchList()
@@ -41,7 +43,7 @@ namespace StockTraderRI.Modules.Watch.Services
                     if (marketFeedService.SymbolExists(upperCasedTrimmedSymbol))
                     {
                         WatchItems.Add(upperCasedTrimmedSymbol);
-                        // this.eventAggregator.GetEvent<AddWatchTickerSymbolEvent>().Publish(true);
+                        this.eventAggregator.GetEvent<AddWatchTickerSymbolEvent>().Publish(true);
                     }
                 }
             }

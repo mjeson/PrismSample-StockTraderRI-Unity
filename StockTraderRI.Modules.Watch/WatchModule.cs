@@ -33,9 +33,9 @@ namespace StockTraderRI.Modules.Watch
 
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            this.container.RegisterType<IWatchListService, WatchListService>();
-            this.container.RegisterType<AddWatchViewModel, AddWatchViewModel>();
-            this.container.RegisterType<WatchListViewModel, WatchListViewModel>();
+            containerRegistry.RegisterSingleton<IWatchListService, WatchListService>();
+            //containerRegistry.RegisterType<AddWatchViewModel, AddWatchViewModel>();
+            //this.container.RegisterType<WatchListViewModel, WatchListViewModel>();
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<MarketItems xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" RefreshRate="5">
+<MarketItems xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" RefreshRate="20">
   <MarketItem TickerSymbol="STOCK0" LastPrice="37.00" Volume="1000"></MarketItem>
   <MarketItem TickerSymbol="STOCK1" LastPrice="78.13" Volume="100"></MarketItem>
   <MarketItem TickerSymbol="STOCK2" LastPrice="23.80" Volume="200"></MarketItem>

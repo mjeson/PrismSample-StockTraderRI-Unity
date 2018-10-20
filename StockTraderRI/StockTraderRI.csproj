@@ -51,16 +51,12 @@
       <HintPath>..\packages\Prism.Wpf.7.1.0.431\lib\net45\Prism.Wpf.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Configuration" />
-    <Reference Include="System.Data" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Prism.Wpf.7.1.0.431\lib\net45\System.Windows.Interactivity.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
@@ -179,22 +175,6 @@
     <ProjectReference Include="..\StockTraderRI.Infrastructure\StockTraderRI.Infrastructure.csproj">
       <Project>{7ac8182d-413b-4b6c-9d9c-5e62ba9799da}</Project>
       <Name>StockTraderRI.Infrastructure</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\StockTraderRI.Modules.Market\StockTraderRI.Modules.Market.csproj">
-      <Project>{8485748c-01c5-4598-ae18-fa8031529752}</Project>
-      <Name>StockTraderRI.Modules.Market</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\StockTraderRI.Modules.News\StockTraderRI.Modules.News.csproj">
-      <Project>{7df2e2b7-9e12-4384-b2e9-e98f6324cb74}</Project>
-      <Name>StockTraderRI.Modules.News</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\StockTraderRI.Modules.Position\StockTraderRI.Modules.Position.csproj">
-      <Project>{167566c1-7f9e-4aba-b245-2f59603966c7}</Project>
-      <Name>StockTraderRI.Modules.Position</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\StockTraderRI.Modules.Watch\StockTraderRI.Modules.Watch.csproj">
-      <Project>{67dd0785-b55e-41ba-93a2-d4bba31c6804}</Project>
-      <Name>StockTraderRI.Modules.Watch</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
