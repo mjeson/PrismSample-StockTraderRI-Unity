@@ -19,7 +19,7 @@ Originally it was created with MEF. This version recreates it with Unity DI.
 
 # Fun with Wix(Window Installer XML)!!!
 * Project Templates
-  * Setup Project (.wix)
+  * Setup Project (.wixproj) --> a container of .wxs|.wxl file e.g. product.wxs, Server.wxs, Product_en-us.wxl, WixUI_HK.wxs,License.wxs
   * Merge Module Project (.msn)
   * Setup Library Project (wixlib) --> share features between installations
   * Bootstrapper Project --> create a SETUP.EXE
@@ -41,8 +41,8 @@ Originally it was created with MEF. This version recreates it with Unity DI.
  * one file per component
  * 
 * External Tools!!
-  * Candle.exe --> To complie your wix project
-  * Light.exe --> To Linken your output of candle i think so!!
+  * Candle.exe --> To complie your wix project--- handles the compiling, transforming your .wxs files into .wixobj file
+  * Light.exe --> To Linken your output of candle i think so!!---  The linking and binding phases are handled by a tool called Light.
 
 
 
