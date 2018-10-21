@@ -1,0 +1,56 @@
+<project name="StockTraderRI" default="compile">
+<property name="MSBuildPath" value="${framework::get-tool-path('msbuild.exe')}"/>
+<property name="Platform" value="Any CPU"/>
+<property name="current-dir" value="${directory::get-current-directory()}"/>
+<property name="obj-dir" value="${directory::get-current-directory()}"/>
+<property name="bin-dir" value="${path::combine(current-dir,'StockTraderRI\bin')}"/>
+
+<property name="nantcontrib-dir"   value="${path::combine(current-dir, 'nantcontrib-0.92')}"   overwrite="false" />
+<property name="SolutionFile" value="${path::combine(current-dir,'StockTraderRI.sln')}"/>
+<property name="DeleteBinAndObjFolder" value="${path::combine(current-dir,'DeleteBinAndObjFolder.bat')}"/>
+
+<property name="SolutionConfiguration" value="Debug"/>
+<property name="nancontrib-dll" value="${path::combine(nantcontrib-dir, 'NAnt.Contrib.Tasks.dll')}"/>
+<property name="nant-dir" value="${nant::get-base-directory()}"/>
+
+ 
+  <echo message="${DeleteBinAndObjFolder}"/>
+
+  <loadtasks assembly="${nancontrib-dll}"  /> 
+
+
+
+
+  <target name="targ1">
+    <echo message="target 1"/>
+  </target>
+
+  <target name="targ2" depends="targ1">
+    <echo message="target 2"/>
+  </target>
+
+ 
+ 
+ <target name="compile" depends="clean" >
+ <echo message="**********************BUILD START*****************"/>
+ <exec program="${MSBuildPath}">
+        <arg line='"${SolutionFile}"' />
+        <arg line='"/property:Configuration=${SolutionConfiguration}"' />
+		<arg line='"/property:Platform=${Platform}"' />
+        <arg value="/target:Rebuild" />
+        <arg value="/verbosity:normal" />
+ </exec>  
+<echo message="**********************BUILD ENDE*****************"/>
+
+  </target>
+
+  <!-- clean -->
+ <target name="clean"  if="${directory::exists('bin-dir')}">
+    <exec  program="${DeleteBinAndObjFolder}" failonerror="false"  if="${directory::exists('test')}" >
+		 
+   
+	</exec>
+ </target>
+
+
+</project>

@@ -28,6 +28,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockTraderRI.Modules.Posit
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockTraderRI.Modules.Watch", "StockTraderRI.Modules.Watch\StockTraderRI.Modules.Watch.csproj", "{67DD0785-B55E-41BA-93A2-D4BBA31C6804}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{786E26B3-A3B2-4CFB-88CD-14EC9C5A1AC0}"
+	ProjectSection(SolutionItems) = preProject
+		DeleteBinAndObjFolder.bat = DeleteBinAndObjFolder.bat
+		Master.build = Master.build
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
