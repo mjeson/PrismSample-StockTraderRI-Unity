@@ -1,5 +1,9 @@
 <project name="StockTraderRI" default="compile">
-<property name="MSBuildPath" value="${framework::get-tool-path('msbuild.exe')}"/>
+<property name="MSBuildPath_old" value="${framework::get-tool-path('msbuild.exe')}"/>
+<property name="MSBuildPath_OLD_FOR_6" value="C:\Program Files (x86)\MSBuild\14.0\Bin\MSBUILD.exe"/>
+<property name="MSBuildPath" value="C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\Bin\MSBUILD.exe"/>
+
+
 <property name="Platform" value="Any CPU"/>
 <property name="current-dir" value="${directory::get-current-directory()}"/>
 <property name="obj-dir" value="${directory::get-current-directory()}"/>
@@ -21,11 +25,12 @@
 
 
 
-  <target name="targ1">
+  <target name="showtime">
     <echo message="target 1"/>
+	<echo message='MSBuildExtensionsPath="$(MSBuildExtensionsPath)"' />
   </target>
 
-  <target name="targ2" depends="targ1">
+  <target name="targ2" depends="showtime">
     <echo message="target 2"/>
   </target>
 
