@@ -1,7 +1,21 @@
 
+read 
+https://www.codeproject.com/Articles/1109475/Modular-Web-Application-with-ASP-NET-Core
+
 # PrismSample-StockTraderRI-Unity
 This is a WPF Prism sample for StockTrader Reference Implementation. 
 Originally it was created with MEF. This version recreates it with Unity DI.
+
+# Dev contribution
+* Pre-conditions:
+    * .Net build tool(Nant > 0.9.0) and NantContribe.dll must be installed
+    * VS2017 must be installed
+    * Wix(Window Installer XML) must be installed
+* Step by step:
+    * Clone Project
+    * Open CMD or Powershell
+    * From Solution folder, write Command **nant** and press Enter-Key
+
 
 
 
