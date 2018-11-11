@@ -2,7 +2,7 @@
 using System.Windows;
 using Prism.Regions;
 using System;
-using CommonServiceLocator;
+using Microsoft.Practices.ServiceLocation;
 
 namespace StockTraderRI.Infrastructure.Behaviors
 {

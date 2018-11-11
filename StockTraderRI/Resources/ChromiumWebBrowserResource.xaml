@@ -1,0 +1,35 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:StockTraderRI.Controls"
+    xmlns:inter="clr-namespace:StockTraderRI.Infrastructure.MyControls;assembly=StockTraderRI.Infrastructure"
+    xmlns:local="clr-namespace:StockTraderRI.Resources"
+    xmlns:wpf="clr-namespace:CefSharp.Wpf;assembly=CefSharp.Wpf">
+
+    <Style x:Key="H" TargetType="{x:Type inter:UserControlExtend}">
+        <Style.Setters>
+            <Setter Property="Background" Value="Azure" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="inter:UserControlExtend">
+                        <Grid>
+                            <wpf:ChromiumWebBrowser Address="{Binding DataContext.Url, RelativeSource={RelativeSource Self}}" />
+                            <DockPanel x:Name="FakeDockPanel">
+                                <Button
+                                    Command="{Binding DataContext.ShowWebPageCommand, RelativeSource={RelativeSource Self}}"
+                                    Content="{Binding DataContext.CommandName, RelativeSource={RelativeSource Self}}"
+                                    DockPanel.Dock="Top" />
+                                <ContentPresenter Margin="10,0,10,0" Content="{TemplateBinding Content}" />
+                            </DockPanel>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChromiumable" Value="True">
+                                <Setter TargetName="FakeDockPanel" Property="Visibility" Value="Collapsed" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style.Setters>
+    </Style>
+</ResourceDictionary>

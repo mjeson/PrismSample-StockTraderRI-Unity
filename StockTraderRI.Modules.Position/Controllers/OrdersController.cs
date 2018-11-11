@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using CommonServiceLocator;
+using Microsoft.Practices.ServiceLocation;
 using Prism.Commands;
 using Prism.Regions;
 using StockTraderRI.Infrastructure;

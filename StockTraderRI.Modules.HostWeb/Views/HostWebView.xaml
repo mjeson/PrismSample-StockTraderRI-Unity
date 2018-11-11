@@ -1,0 +1,16 @@
+﻿<inter:UserControlExtend
+    x:Class="StockTraderRI.Modules.HostWeb.Views.HostWebView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:inter="clr-namespace:StockTraderRI.Infrastructure.MyControls;assembly=StockTraderRI.Infrastructure"
+    xmlns:local="clr-namespace:StockTraderRI.Modules.HostWeb.ViewModels"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:prism="http://prismlibrary.com/"
+    x:Name="Ok"
+    prism:ViewModelLocator.AutoWireViewModel="True"
+    Background="BlueViolet"
+    IsChromiumable="True"
+    Style="{StaticResource H}"
+    mc:Ignorable="d">
+</inter:UserControlExtend>

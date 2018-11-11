@@ -1,5 +1,4 @@
 ﻿using Microsoft.Practices.Unity;
-using Prism.Ioc;
 using Prism.Modularity;
 using Prism.Regions;
 using StockTraderRI.Infrastructure;
@@ -7,7 +6,6 @@ using StockTraderRI.Infrastructure.Interfaces;
 using StockTraderRI.Modules.News.Article;
 using StockTraderRI.Modules.News.Controllers;
 using StockTraderRI.Modules.News.Services;
-using Unity;
 
 namespace StockTraderRI.Modules.News
 {
@@ -41,15 +39,6 @@ namespace StockTraderRI.Modules.News
 
             this.regionManager.RegisterViewWithRegion(RegionNames.SecondaryRegion,
                                                        () => this.container.Resolve<NewsReaderView>());
-        }
-
-        public void OnInitialized(IContainerProvider containerProvider)
-        {
-            this.Initialize();
-        }
-
-        public void RegisterTypes(IContainerRegistry containerRegistry)
-        {
         }
     }
 }
