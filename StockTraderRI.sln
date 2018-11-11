@@ -9,7 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockTraderRI", "StockTrade
 		{9B28E65B-B192-4CAA-AC81-511423307919} = {9B28E65B-B192-4CAA-AC81-511423307919}
 		{67DD0785-B55E-41BA-93A2-D4BBA31C6804} = {67DD0785-B55E-41BA-93A2-D4BBA31C6804}
 		{8485748C-01C5-4598-AE18-FA8031529752} = {8485748C-01C5-4598-AE18-FA8031529752}
-		{83FC6999-89FD-4FB3-9949-6FDABC9A8573} = {83FC6999-89FD-4FB3-9949-6FDABC9A8573}
 		{7DF2E2B7-9E12-4384-B2E9-E98F6324CB74} = {7DF2E2B7-9E12-4384-B2E9-E98F6324CB74}
 		{167566C1-7F9E-4ABA-B245-2F59603966C7} = {167566C1-7F9E-4ABA-B245-2F59603966C7}
 		{711111DF-6B88-4CAB-9A91-8698F3D7A3AC} = {711111DF-6B88-4CAB-9A91-8698F3D7A3AC}
@@ -47,9 +46,29 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockTraderRI.Extensions", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockTradeRI.Common.WebApi", "StockTradeRI.Common.WebApi\StockTradeRI.Common.WebApi.csproj", "{C6DB8910-66CF-46C8-878D-097E6C4FF12C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockTraderRI.Common.WebUi", "StockTraderRI.Common.WebUi\StockTraderRI.Common.WebUi.csproj", "{83FC6999-89FD-4FB3-9949-6FDABC9A8573}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockTraderRI.Modules.HostWeb", "StockTraderRI.Modules.HostWeb\StockTraderRI.Modules.HostWeb.csproj", "{711111DF-6B88-4CAB-9A91-8698F3D7A3AC}"
+EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "StockTraderRI.Common.WebUi", "StockTraderRI.Common.WebUi\", "{1FF057BF-F89F-474D-8297-4A22EC24B013}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.7.2"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_13335"
+		Debug.AspNetCompiler.PhysicalPath = "StockTraderRI.Common.WebUi\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_13335\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_13335"
+		Release.AspNetCompiler.PhysicalPath = "StockTraderRI.Common.WebUi\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_13335\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "13335"
+		SlnRelativePath = "StockTraderRI.Common.WebUi\"
+		DefaultWebSiteLanguage = "Visual C#"
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -143,14 +162,6 @@ Global
 		{C6DB8910-66CF-46C8-878D-097E6C4FF12C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C6DB8910-66CF-46C8-878D-097E6C4FF12C}.Release|x86.ActiveCfg = Release|Any CPU
 		{C6DB8910-66CF-46C8-878D-097E6C4FF12C}.Release|x86.Build.0 = Release|Any CPU
-		{83FC6999-89FD-4FB3-9949-6FDABC9A8573}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{83FC6999-89FD-4FB3-9949-6FDABC9A8573}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{83FC6999-89FD-4FB3-9949-6FDABC9A8573}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{83FC6999-89FD-4FB3-9949-6FDABC9A8573}.Debug|x86.Build.0 = Debug|Any CPU
-		{83FC6999-89FD-4FB3-9949-6FDABC9A8573}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{83FC6999-89FD-4FB3-9949-6FDABC9A8573}.Release|Any CPU.Build.0 = Release|Any CPU
-		{83FC6999-89FD-4FB3-9949-6FDABC9A8573}.Release|x86.ActiveCfg = Release|Any CPU
-		{83FC6999-89FD-4FB3-9949-6FDABC9A8573}.Release|x86.Build.0 = Release|Any CPU
 		{711111DF-6B88-4CAB-9A91-8698F3D7A3AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{711111DF-6B88-4CAB-9A91-8698F3D7A3AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{711111DF-6B88-4CAB-9A91-8698F3D7A3AC}.Debug|x86.ActiveCfg = Debug|Any CPU
@@ -159,6 +170,14 @@ Global
 		{711111DF-6B88-4CAB-9A91-8698F3D7A3AC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{711111DF-6B88-4CAB-9A91-8698F3D7A3AC}.Release|x86.ActiveCfg = Release|Any CPU
 		{711111DF-6B88-4CAB-9A91-8698F3D7A3AC}.Release|x86.Build.0 = Release|Any CPU
+		{1FF057BF-F89F-474D-8297-4A22EC24B013}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1FF057BF-F89F-474D-8297-4A22EC24B013}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1FF057BF-F89F-474D-8297-4A22EC24B013}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{1FF057BF-F89F-474D-8297-4A22EC24B013}.Debug|x86.Build.0 = Debug|Any CPU
+		{1FF057BF-F89F-474D-8297-4A22EC24B013}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{1FF057BF-F89F-474D-8297-4A22EC24B013}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{1FF057BF-F89F-474D-8297-4A22EC24B013}.Release|x86.ActiveCfg = Debug|Any CPU
+		{1FF057BF-F89F-474D-8297-4A22EC24B013}.Release|x86.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -173,8 +192,8 @@ Global
 		{A056B10D-06D6-4BCD-AEE7-BC4205339DEC} = {2E642D9F-2070-4CE7-A8FD-2D46FF8E600E}
 		{031ABA7B-5346-495F-9493-790A6BDB969F} = {2E642D9F-2070-4CE7-A8FD-2D46FF8E600E}
 		{C6DB8910-66CF-46C8-878D-097E6C4FF12C} = {33B9D74E-D4ED-4756-B5BB-24E3B7AA4EC3}
-		{83FC6999-89FD-4FB3-9949-6FDABC9A8573} = {33B9D74E-D4ED-4756-B5BB-24E3B7AA4EC3}
 		{711111DF-6B88-4CAB-9A91-8698F3D7A3AC} = {37CB91C2-628E-48A1-84D5-9990AE9928B9}
+		{1FF057BF-F89F-474D-8297-4A22EC24B013} = {33B9D74E-D4ED-4756-B5BB-24E3B7AA4EC3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {95554CB7-3595-4605-B955-021F5CB24B4E}

@@ -6,6 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'stocktrade-ri';
-  arr: any[] = [1, 2, 4, 5];
+  title = 'stock-trade-ri';
 }

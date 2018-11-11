@@ -1,3 +1,13 @@
+# For NetStandard
+* Microsoft.AspNetCore.StaticFiles
+* Microsoft.AspNetCore.Mvc.Core
+* Microsoft.AspNetCore.HttpsPolicy
+* Microsoft.AspNetCore.Diagnostics
+* Microsoft.AspNetCore.Hosting
+* Microsoft.AspNetCore.Hosting.Abstractions
+* Microsoft.AspNetCore.Mvc
+* Microsoft.AspNetCore
+
 
 read 
 https://www.codeproject.com/Articles/1109475/Modular-Web-Application-with-ASP-NET-Core
