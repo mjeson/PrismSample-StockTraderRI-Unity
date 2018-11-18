@@ -2,17 +2,17 @@
 
   <PropertyGroup>
     <!--<RestoreProjectStyle>PackageReference</RestoreProjectStyle>-->
-    <TargetFrameworks>netstandard2.0;net462</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0</TargetFrameworks>
     <!--<TargetFramework>netstandard2.0</TargetFramework>-->
     <!--<TargetFramework>netcoreapp2.1</TargetFramework>-->
 
     <ApplicationIcon />
     <OutputType>Library</OutputType>
-    <StartupObject />
+
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <AssemblyVersion>2.0.0.1</AssemblyVersion>
-    <FileVersion>2.0.0.1</FileVersion>
-    <Version>2.0.0</Version>
+    <AssemblyVersion>1.0.0</AssemblyVersion>
+    <FileVersion>1.0.0</FileVersion>
+    <Version>1.0.0</Version>
   </PropertyGroup>
 
   <ItemGroup>

@@ -20,12 +20,11 @@ namespace StockTraderRI.Modules.Watch.WatchList
         private readonly IEventAggregator eventAggregator;
         private readonly IMarketFeedService marketFeedService;
         private readonly IRegionManager regionManager;
+        private readonly ICommand removeWatchCommand;
         private readonly IStockTraderRICommandProxy stockTraderRICommandProxy;
         private readonly IWatchListService watchListService;
         private WatchItem currentWatchItem;
         private string headerInfo;
-        private ICommand removeWatchCommand;
-        private ObservableCollection<string> watchList;
         private ObservableCollection<WatchItem> watchListItems;
 
         public WatchListViewModel(IStockTraderRICommandProxy stockTraderRICommandProxy, IWatchListService watchListService, IMarketFeedService marketFeedService, IRegionManager regionManager, IEventAggregator eventAggregator)
@@ -159,7 +158,7 @@ namespace StockTraderRI.Modules.Watch.WatchList
 
         private void RemoveWatch(string tickerSymbol)
         {
-            this.watchList.Remove(tickerSymbol);
+            //this.watchList.Remove(tickerSymbol);
         }
 
         //private void WatchListItems_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)

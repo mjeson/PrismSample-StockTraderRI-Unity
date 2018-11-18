@@ -1,17 +1,8 @@
 ﻿using Microsoft.Practices.Unity;
 using Prism.Modularity;
 using Prism.Regions;
-using StockTradeRI.Common.WebApi;
 using StockTraderRI.Infrastructure;
 using StockTraderRI.Modules.HostWeb.Views;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace StockTraderRI.Modules.HostWeb
 {
@@ -34,7 +25,7 @@ namespace StockTraderRI.Modules.HostWeb
 
             this.regionManager.RegisterViewWithRegion(RegionNames.MainRegion, () => this.container.Resolve<HostWebView>());
 
-            Program.Main(null);
+            //Program.Main(null);
         }
 
         private void RegisterTypes()

@@ -3,14 +3,9 @@ using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
 using StockTraderRI.Infrastructure;
-using StockTraderRI.Infrastructure.Interfaces;
 using StockTraderRI.Modules.HostWeb.Interfaces;
 using StockTraderRI.Modules.HostWeb.Views;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace StockTraderRI.Modules.HostWeb.ViewModels
@@ -26,7 +21,8 @@ namespace StockTraderRI.Modules.HostWeb.ViewModels
         {
             this.regionManager = regionManager;
             this.url = "www.facebook.de";
-            this.ShowWebPageCommand = new DelegateCommand<string>(p => this.ExecuteShowWebPage(p));
+            this.contentInfo = "KKKKKKKKKKKKKKKKKKKK";
+            this.showWebPageCommand = new DelegateCommand<string>(p => this.ExecuteShowWebPage(p));
         }
 
         public ICommand BackCommand => throw new NotImplementedException();
@@ -39,7 +35,7 @@ namespace StockTraderRI.Modules.HostWeb.ViewModels
         public string HeaderInfo { get => "WebApp"; }
         public bool IsChromiumable { get => true; }
 
-        public ICommand ShowWebPageCommand { get; private set; }
+        public ICommand ShowWebPageCommand { get => this.showWebPageCommand; }
         public string Url { get => this.url; }
 
         private void ExecuteShowWebPage(string parameter)
@@ -54,7 +50,7 @@ namespace StockTraderRI.Modules.HostWeb.ViewModels
             object topoView = region.GetView("TopoView");
             if (topoView == null)
             {
-                topoView = ServiceLocator.Current.GetInstance<TopoView>();
+                topoView = ServiceLocator.Current.GetInstance<HostWebView>();
                 region.Add(topoView, "TopoView");
             }
 

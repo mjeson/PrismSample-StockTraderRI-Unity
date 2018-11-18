@@ -134,7 +134,7 @@ namespace StockTraderRI.Modules.Position.Orders
                 if (this.transactionInfo.TransactionType != value)
                 {
                     this.transactionInfo.TransactionType = value;
-                    OnPropertyChanged(() => this.TransactionType);
+                    RaisePropertyChanged();
                 }
             }
         }
