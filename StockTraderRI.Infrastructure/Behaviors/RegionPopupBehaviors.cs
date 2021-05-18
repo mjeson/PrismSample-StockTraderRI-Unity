@@ -1,8 +1,8 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Windows;
+using Prism.Ioc;
 using Prism.Regions;
-using System;
-using Microsoft.Practices.ServiceLocation;
 
 namespace StockTraderRI.Infrastructure.Behaviors
 {
@@ -73,12 +73,12 @@ namespace StockTraderRI.Infrastructure.Behaviors
         /// </remarks>
         public static void RegisterNewPopupRegion(DependencyObject owner, string regionName)
         {
-            // Creates a new region and registers it in the default region manager. Another option if
-            // you need the complete infrastructure with the default region behaviors is to extend
-            // DelayedRegionCreationBehavior overriding the CreateRegion method and create an
+            // Creates a new region and registers it in the default region manager. Another option
+            // if you need the complete infrastructure with the default region behaviors is to
+            // extend DelayedRegionCreationBehavior overriding the CreateRegion method and create an
             // instance of it that will be in charge of registering the Region once a RegionManager
             // is set as an attached property in the Visual Tree.
-            IRegionManager regionManager = ServiceLocator.Current.GetInstance<IRegionManager>();
+            IRegionManager regionManager = ContainerLocator.Container.Resolve<IRegionManager>();
             if (regionManager != null)
             {
                 IRegion region = new SingleActiveRegion();
@@ -133,8 +133,8 @@ namespace StockTraderRI.Infrastructure.Behaviors
 
         private static bool IsInDesignMode(DependencyObject element)
         {
-            // Due to a known issue in Cider, GetIsInDesignMode attached property value is not enough
-            // to know if it's in design mode.
+            // Due to a known issue in Cider, GetIsInDesignMode attached property value is not
+            // enough to know if it's in design mode.
             return DesignerProperties.GetIsInDesignMode(element) || Application.Current == null
                    || Application.Current.GetType() == typeof(Application);
         }
