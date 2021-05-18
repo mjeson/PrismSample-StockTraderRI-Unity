@@ -6,14 +6,14 @@
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v5.0": {
-      "StockTraderRI/1.0.0": {
+      "StockTraderRI.Modules.Position/1.0.0": {
         "dependencies": {
           "Prism.Unity": "8.0.0.1909",
           "StockTraderRI.ChartControls": "1.0.0",
           "StockTraderRI.Infrastructure": "1.0.0"
         },
         "runtime": {
-          "StockTraderRI.dll": {}
+          "StockTraderRI.Modules.Position.dll": {}
         }
       },
       "Microsoft.Xaml.Behaviors.Wpf/1.1.19": {
@@ -97,7 +97,7 @@
     }
   },
   "libraries": {
-    "StockTraderRI/1.0.0": {
+    "StockTraderRI.Modules.Position/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

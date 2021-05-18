@@ -9,10 +9,10 @@ namespace StockTraderRI
     {
         public Shell()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
 
-        ShellViewModel ViewModel
+        private ShellViewModel ViewModel
         {
             set
             {
