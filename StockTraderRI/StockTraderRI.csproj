@@ -11,7 +11,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Resource Include="Resources\background.png"/>
+    <EmbeddedResource Include="Resources\background.png" />
   </ItemGroup>
 
 
