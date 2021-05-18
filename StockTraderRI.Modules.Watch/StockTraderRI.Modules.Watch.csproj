@@ -9,9 +9,6 @@
   </PropertyGroup>
 
 
-  <PropertyGroup>
-    <PostBuildEvent>xcopy "$(TargetDir)*.*" "$(SolutionDir)\$(SolutionName)\$(OutDir)" /Y</PostBuildEvent>
-  </PropertyGroup>
 
 
   <ItemGroup>
@@ -24,4 +21,7 @@
     <ProjectReference Include="..\StockTraderRI.Infrastructure\StockTraderRI.Infrastructure.csproj" />
   </ItemGroup>
 
+  <PropertyGroup>
+    <PostBuildEvent>xcopy "$(TargetDir)*.*" "$(SolutionDir)\DropLocation\" /Y</PostBuildEvent>
+  </PropertyGroup>
 </Project>

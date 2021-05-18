@@ -9,10 +9,6 @@
   </PropertyGroup>
 
 
-  <PropertyGroup>
-    <PostBuildEvent>xcopy "$(TargetDir)*.*" "$(SolutionDir)\$(SolutionName)\$(OutDir)" /Y</PostBuildEvent>
-  </PropertyGroup>
-
 
   <ItemGroup>
     <PackageReference Include="Prism.Unity" Version="8.0.0.1909" />
@@ -23,5 +19,9 @@
     <ProjectReference Include="..\StockTraderRI.ChartControls\StockTraderRI.ChartControls.csproj" />
     <ProjectReference Include="..\StockTraderRI.Infrastructure\StockTraderRI.Infrastructure.csproj" />
   </ItemGroup>
+
+  <PropertyGroup>
+    <PostBuildEvent>xcopy "$(TargetDir)*.*" "$(SolutionDir)\DropLocation\" /Y</PostBuildEvent>
+  </PropertyGroup>
 
 </Project>
