@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using Microsoft.Practices.ServiceLocation;
 using Prism.Commands;
+using Prism.Ioc;
 using Prism.Regions;
 using StockTraderRI.Infrastructure;
 using StockTraderRI.Infrastructure.Interfaces;
@@ -56,8 +56,8 @@ namespace StockTraderRI.Modules.Position.Controllers
 
             IRegion ordersRegion = _regionManager.Regions[RegionNames.OrdersRegion];
 
-            var orderCompositeViewModel = ServiceLocator.Current.GetInstance<IOrderCompositeViewModel>();
-
+            // TODO@GhZe: var orderCompositeViewModel = ServiceLocator.Current.GetInstance<IOrderCompositeViewModel>();
+            var orderCompositeViewModel = ContainerLocator.Container.Resolve<IOrderCompositeViewModel>();
             orderCompositeViewModel.TransactionInfo = new TransactionInfo(tickerSymbol, transactionType);
             orderCompositeViewModel.CloseViewRequested += delegate
             {
@@ -148,7 +148,7 @@ namespace StockTraderRI.Modules.Position.Controllers
             object ordersView = region.GetView("OrdersView");
             if (ordersView == null)
             {
-                ordersView = ServiceLocator.Current.GetInstance<IOrdersView>();
+                ordersView = ContainerLocator.Container.Resolve<IOrdersView>();
                 region.Add(ordersView, "OrdersView");
             }
 

@@ -7,14 +7,12 @@
     <TargetFramework>net5.0-windows</TargetFramework>
     <RepositoryType>git</RepositoryType>
     <UseWPF>true</UseWPF>
-
-  </PropertyGroup>
-
-
-  <PropertyGroup>
-    <PostBuildEvent>xcopy "$(TargetDir)*.*" "$(SolutionDir)\$(SolutionName)\$(OutDir)" /Y</PostBuildEvent>
     <OutputType>WinExe</OutputType>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="Resources\Backgoung.png"/>
+  </ItemGroup>
 
 
   <ItemGroup>
@@ -26,5 +24,10 @@
     <ProjectReference Include="..\StockTraderRI.ChartControls\StockTraderRI.ChartControls.csproj" />
     <ProjectReference Include="..\StockTraderRI.Infrastructure\StockTraderRI.Infrastructure.csproj" />
   </ItemGroup>
+
+  <PropertyGroup>
+    <PostBuildEvent>xcopy "$(TargetDir)*.*" "$(SolutionDir)\DropLocation\" /Y</PostBuildEvent>
+  </PropertyGroup>
+
 
 </Project>

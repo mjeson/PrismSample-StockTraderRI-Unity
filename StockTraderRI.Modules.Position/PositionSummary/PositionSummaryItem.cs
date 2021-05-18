@@ -45,8 +45,8 @@ namespace StockTraderRI.Modules.Position.PositionSummary
             {
                 if (SetProperty(ref _currentPrice, value))
                 {
-                    this.OnPropertyChanged(() => this.MarketValue);
-                    this.OnPropertyChanged(() => this.GainLossPercent);
+                    this.RaisePropertyChanged(nameof(this.MarketValue));
+                    this.RaisePropertyChanged(nameof(this.GainLossPercent));
                 }
             }
         }

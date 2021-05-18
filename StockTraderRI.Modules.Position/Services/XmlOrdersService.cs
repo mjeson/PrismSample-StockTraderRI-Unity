@@ -2,7 +2,6 @@ using System;
 using System.Globalization;
 using System.IO;
 using System.Xml.Linq;
-using Prism.Logging;
 using StockTraderRI.Modules.Position.Interfaces;
 using StockTraderRI.Modules.Position.Models;
 using StockTraderRI.Modules.Position.Properties;
@@ -11,12 +10,6 @@ namespace StockTraderRI.Modules.Position.Services
 {
     public class XmlOrdersService : IOrdersService
     {
-        private ILoggerFacade logger;
-
-        public XmlOrdersService(ILoggerFacade logger)
-        {
-            this.logger = logger;
-        }
         private string _fileName = "SubmittedOrders.xml";
 
         public string FileName
@@ -64,7 +57,8 @@ namespace StockTraderRI.Modules.Position.Services
 
             string message = String.Format(CultureInfo.CurrentCulture, Resources.LogOrderSubmitted,
                                            orderElement.ToString());
-            logger.Log(message, Category.Debug, Priority.Low);
+            //TODO@GhZe: Use Log to log the message
+            Console.WriteLine(message + "Category.Debug " + "Priority.Low");
         }
     }
 }
