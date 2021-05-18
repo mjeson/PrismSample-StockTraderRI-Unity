@@ -13,10 +13,6 @@ namespace StockTraderRI.Modules.Position
 {
     public class PositionModule : IModule
     {
-        public void Initialize()
-        {
-        }
-
         public void OnInitialized(Prism.Ioc.IContainerProvider containerProvider)
         {
             var regionManager = containerProvider.Resolve<IRegionManager>();

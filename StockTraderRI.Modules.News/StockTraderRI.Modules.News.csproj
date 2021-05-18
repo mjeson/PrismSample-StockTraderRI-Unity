@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <PropertyGroup>
-    <PostBuildEvent>xcopy "$(TargetDir)*.*" "$(SolutionDir)\DropLocation\" /Y</PostBuildEvent>
+    <PostBuildEvent>xcopy "$(TargetDir)*.*" "$(SolutionDir)\$()\" /Y</PostBuildEvent>
   </PropertyGroup>
 
 </Project>

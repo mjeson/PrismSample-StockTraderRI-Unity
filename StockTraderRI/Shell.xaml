@@ -288,35 +288,6 @@
                 </Grid.RenderTransform>
             </Grid>
 
-            <!--<Grid
-                x:Name="DetailsGridB"
-                Grid.Row="2"
-                Margin="10,10,10,10"
-                RenderTransformOrigin="0.5,0.5">
-                <Grid.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform />
-                        <SkewTransform />
-                        <RotateTransform />
-                        <TranslateTransform />
-                    </TransformGroup>
-                </Grid.RenderTransform>
-                <Controls:HilscherChromiumWebBrowser x:Name="ActionContentB">
-                    <ContentControl.Template>
-                        <ControlTemplate TargetType="ContentControl">
-                            <Grid>
-                                <ContentPresenter Margin="10,0,10,0" Content="{TemplateBinding Content}" />
-                            </Grid>
-                            <ControlTemplate.Triggers>
-                                <Trigger Property="HasContent" Value="true">
-                                    <Setter Property="Visibility" Value="Visible" />
-                                </Trigger>
-                            </ControlTemplate.Triggers>
-                        </ControlTemplate>
-                    </ContentControl.Template>
-                </Controls:HilscherChromiumWebBrowser>
-            </Grid>-->
-
             <!--  sidebar  -->
             <Grid
                 x:Name="SideGrid"
