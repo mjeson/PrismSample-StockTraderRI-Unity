@@ -1,5 +1,4 @@
-using Microsoft.Practices.Unity;
-
+using Prism.Ioc;
 using Prism.Modularity;
 using Prism.Regions;
 using StockTraderRI.Infrastructure;
@@ -14,37 +13,34 @@ namespace StockTraderRI.Modules.Position
 {
     public class PositionModule : IModule
     {
-        private readonly IUnityContainer container;
-        private readonly IRegionManager regionManager;
-        private OrdersController _ordersController;
-
-        public PositionModule(IUnityContainer container, IRegionManager regionManager)
-        {
-            this.container = container;
-            this.regionManager = regionManager;
-        }
-
         public void Initialize()
         {
-            this.RegisterTypes();
-            this.regionManager.RegisterViewWithRegion(RegionNames.MainRegion,
-                                                       () => this.container.Resolve<PositionSummaryView>());
-            this._ordersController = this.container.Resolve<OrdersController>();
         }
 
-        private void RegisterTypes()
+        public void OnInitialized(Prism.Ioc.IContainerProvider containerProvider)
         {
-            this.container.RegisterType<IAccountPositionService, AccountPositionService>();
-            this.container.RegisterType<IOrdersService, XmlOrdersService>();
-            this.container.RegisterType<IOrdersController, OrdersController>();
-            this.container.RegisterType<IObservablePosition, ObservablePosition>();
-            this.container.RegisterType<IPositionSummaryViewModel, PositionSummaryViewModel>();
-            this.container.RegisterType<IPositionPieChartViewModel, PositionPieChartViewModel>();
+            var regionManager = containerProvider.Resolve<IRegionManager>();
 
-            this.container.RegisterType<IOrderCompositeViewModel, OrderCompositeViewModel>();
-            this.container.RegisterType<IOrderDetailsViewModel, OrderDetailsViewModel>();
+            regionManager.RegisterViewWithRegion(RegionNames.MainRegion,
+                                                        () => containerProvider.Resolve<PositionSummaryView>());
+            var _ordersController = containerProvider.Resolve<OrdersController>();
 
-            this.container.RegisterType<IOrdersView, OrdersView>();
+            ;
+        }
+
+        public void RegisterTypes(IContainerRegistry containerRegistry)
+        {
+            containerRegistry.Register<IAccountPositionService, AccountPositionService>();
+            containerRegistry.Register<IOrdersService, XmlOrdersService>();
+            containerRegistry.Register<IOrdersController, OrdersController>();
+            containerRegistry.Register<IObservablePosition, ObservablePosition>();
+            containerRegistry.Register<IPositionSummaryViewModel, PositionSummaryViewModel>();
+            containerRegistry.Register<IPositionPieChartViewModel, PositionPieChartViewModel>();
+
+            containerRegistry.Register<IOrderCompositeViewModel, OrderCompositeViewModel>();
+            containerRegistry.Register<IOrderDetailsViewModel, OrderDetailsViewModel>();
+
+            containerRegistry.Register<IOrdersView, OrdersView>();
         }
     }
 }
