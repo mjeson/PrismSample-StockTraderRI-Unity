@@ -20,7 +20,8 @@
   </ItemGroup>
 
   <PropertyGroup>
-    <PostBuildEvent>xcopy "$(TargetDir)*.*" "$(SolutionDir)\DropLocation\" /Y</PostBuildEvent>
+    <PostBuildEvent>xcopy "$(TargetDir)*.*" "$(SolutionDir)$(OutDir)\StockTraderRI\bin\$(Configuration)\$(TargetFramework)" /Y</PostBuildEvent>
   </PropertyGroup>
+
 
 </Project>

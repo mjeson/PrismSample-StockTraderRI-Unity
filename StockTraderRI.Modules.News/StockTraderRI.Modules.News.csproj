@@ -1,4 +1,5 @@
 ﻿<!-- https://docs.microsoft.com/de-de/dotnet/core/project-sdk/msbuild-props-desktop -->
+<!-- 1. Build In Macro for csproj file: https://docs.microsoft.com/en-us/cpp/build/reference/common-macros-for-build-commands-and-properties?view=msvc-160&viewFallbackFrom=vs-2017 -->
 
 <Project Sdk="Microsoft.NET.Sdk">
 
@@ -19,7 +20,7 @@
   </ItemGroup>
 
   <PropertyGroup>
-    <PostBuildEvent>xcopy "$(TargetDir)*.*" "$(SolutionDir)\$()\" /Y</PostBuildEvent>
+    <PostBuildEvent>xcopy "$(TargetDir)*.*" "$(SolutionDir)$(OutDir)\StockTraderRI\bin\$(Configuration)\$(TargetFramework)" /Y</PostBuildEvent>
   </PropertyGroup>
 
 </Project>

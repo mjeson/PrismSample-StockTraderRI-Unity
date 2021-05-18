@@ -2,6 +2,8 @@
 using Prism.Ioc;
 using Prism.Modularity;
 using Prism.Unity;
+using StockTraderRI.Infrastructure;
+using StockTraderRI.Infrastructure.Interfaces;
 
 namespace StockTraderRI
 {
@@ -29,7 +31,8 @@ namespace StockTraderRI
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            // 2. Nothing to do
+            // 2. Common interface
+            containerRegistry.Register<IStockTraderRICommandProxy, StockTraderRICommandProxy>();
         }
     }
 }
