@@ -2,11 +2,11 @@
     x:Class="StockTraderRI.Shell"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:Controls="clr-namespace:StockTraderRI.Controls"
-    xmlns:StockTraderRI="clr-namespace:StockTraderRI"
-    xmlns:inf="clr-namespace:StockTraderRI.Infrastructure;assembly=StockTraderRI.Infrastructure"
-    xmlns:infBehaviors="clr-namespace:StockTraderRI.Infrastructure.Behaviors;assembly=StockTraderRI.Infrastructure"
     xmlns:prism="http://www.codeplex.com/prism"
+    xmlns:StockTraderRI="clr-namespace:StockTraderRI"
+    xmlns:Controls="clr-namespace:StockTraderRI.Controls"
+    xmlns:infBehaviors="clr-namespace:StockTraderRI.Infrastructure.Behaviors;assembly=StockTraderRI.Infrastructure"
+    xmlns:inf="clr-namespace:StockTraderRI.Infrastructure;assembly=StockTraderRI.Infrastructure"
     Title="Stock Trader Reference Implementation"
     Width="1024"
     Height="768"
@@ -286,23 +286,6 @@
                         <TranslateTransform />
                     </TransformGroup>
                 </Grid.RenderTransform>
-                <Controls:HilscherChromiumWebBrowser x:Name="ActionContent" prism:RegionManager.RegionName="{x:Static inf:RegionNames.WebRegion}">
-                    <ContentControl.Template>
-                        <ControlTemplate TargetType="Controls:HilscherChromiumWebBrowser">
-                            <Grid>
-                                <ContentPresenter Margin="10,0,10,0" Content="{TemplateBinding Content}" />
-                            </Grid>
-                            <ControlTemplate.Triggers>
-                                <Trigger Property="HasContent" Value="false">
-                                    <Setter Property="Visibility" Value="Collapsed" />
-                                </Trigger>
-                                <Trigger Property="HasContent" Value="true">
-                                    <Setter Property="Address" Value="https://www.google.com/" />
-                                </Trigger>
-                            </ControlTemplate.Triggers>
-                        </ControlTemplate>
-                    </ContentControl.Template>
-                </Controls:HilscherChromiumWebBrowser>
             </Grid>
 
             <!--<Grid

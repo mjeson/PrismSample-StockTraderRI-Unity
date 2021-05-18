@@ -1,9 +1,4 @@
-﻿using CefSharp;
-using Prism.Modularity;
-using Prism.Unity;
-using StockTraderRI.Infrastructure;
-using StockTraderRI.Infrastructure.Interfaces;
-using System;
+﻿using System;
 using System.IO;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -19,7 +14,6 @@ namespace StockTraderRI
 
             //Add Custom assembly resolver
             AppDomain.CurrentDomain.AssemblyResolve += Resolver;
-            InitializeCefSharp();
 
             StockTraderRIBootstrapper bootstrapper = new StockTraderRIBootstrapper();
             bootstrapper.Run();
@@ -30,15 +24,6 @@ namespace StockTraderRI
         [MethodImpl(MethodImplOptions.NoInlining)]
         private static void InitializeCefSharp()
         {
-            var settings = new CefSettings();
-
-            // Set BrowserSubProcessPath based on app bitness at runtime
-            settings.BrowserSubprocessPath = Path.Combine(AppDomain.CurrentDomain.SetupInformation.ApplicationBase,
-                                                   Environment.Is64BitProcess ? "x64" : "x86",
-                                                   "CefSharp.BrowserSubprocess.exe");
-
-            // Make sure you set performDependencyCheck false
-            Cef.Initialize(settings, performDependencyCheck: false, browserProcessHandler: null);
         }
 
         // Will attempt to load missing assembly from either x86 or x64 subdir Required by CefSharp

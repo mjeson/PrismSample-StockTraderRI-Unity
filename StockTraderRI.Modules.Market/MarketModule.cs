@@ -1,5 +1,4 @@
-﻿using Microsoft.Practices.Unity;
-
+﻿using Prism.Ioc;
 using Prism.Modularity;
 using Prism.Regions;
 using StockTraderRI.Infrastructure;
@@ -11,35 +10,18 @@ namespace StockTraderRI.Modules.Market
 {
     public class MarketModule : IModule
     {
-        private readonly IUnityContainer container;
-        private readonly IRegionManager regionManager;
-
-        //[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
-        //private MainRegionController _mainRegionController;
-
-        public MarketModule(IUnityContainer container, IRegionManager regionManager)
+        public void OnInitialized(Prism.Ioc.IContainerProvider containerProvider)
         {
-            this.container = container;
-            this.regionManager = regionManager;
+            var regionManager = containerProvider.Resolve<IRegionManager>();
+            regionManager.RegisterViewWithRegion(RegionNames.ResearchRegion,
+                                                        () => containerProvider.Resolve<TrendLineView>());
         }
 
-        public void Initialize()
+        public void RegisterTypes(Prism.Ioc.IContainerRegistry containerRegistry)
         {
-            this.RegisterTypes();
-            this.regionManager.RegisterViewWithRegion(RegionNames.ResearchRegion,
-                                                       () => this.container.Resolve<TrendLineView>());
-            //this._mainRegionController = this.container.Resolve<MainRegionController>();
-            //this.regionManager.RegisterViewWithRegion(RegionNames.TabRegion,
-            //                                           () => this.container.Resolve<EmployeeDetailsView>());
-            //this.regionManager.RegisterViewWithRegion(RegionNames.TabRegion,
-            //                                           () => this.container.Resolve<EmployeeProjectsView>());
-        }
-
-        public void RegisterTypes()
-        {
-            this.container.RegisterType<IMarketFeedService, MarketFeedService>();
-            this.container.RegisterType<IMarketHistoryService, MarketHistoryService>();
-            this.container.RegisterType<TrendLineViewModel, TrendLineViewModel>();
+            containerRegistry.Register<IMarketFeedService, MarketFeedService>();
+            containerRegistry.Register<IMarketHistoryService, MarketHistoryService>();
+            containerRegistry.Register<TrendLineViewModel, TrendLineViewModel>();
         }
     }
 }
