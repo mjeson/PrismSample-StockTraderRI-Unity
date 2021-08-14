@@ -1,8 +1,17 @@
 using Prism.Mvvm;
+
 namespace StockTraderRI.Modules.Position.PositionSummary
 {
     public class PositionSummaryItem : BindableBase
     {
+        private decimal _costBasis;
+
+        private decimal _currentPrice;
+
+        private long _shares;
+
+        private string _tickerSymbol;
+
         public PositionSummaryItem(string tickerSymbol, decimal costBasis, long shares, decimal currentPrice)
         {
             TickerSymbol = tickerSymbol;
@@ -10,28 +19,6 @@ namespace StockTraderRI.Modules.Position.PositionSummary
             Shares = shares;
             CurrentPrice = currentPrice;
         }
-
-        private string _tickerSymbol;
-
-        public string TickerSymbol
-        {
-            get
-            {
-                return _tickerSymbol;
-            }
-            set
-            {
-                if (value == null)
-                {
-                    value = string.Empty;
-                }
-
-                SetProperty(ref _tickerSymbol, value);
-            }
-        }
-
-
-        private decimal _costBasis;
 
         public decimal CostBasis
         {
@@ -43,32 +30,10 @@ namespace StockTraderRI.Modules.Position.PositionSummary
             {
                 if (SetProperty(ref _costBasis, value))
                 {
-                    this.OnPropertyChanged(() => this.GainLossPercent);
+                    this.RaisePropertyChanged();
                 }
             }
         }
-
-
-        private long _shares;
-
-        public long Shares
-        {
-            get
-            {
-                return _shares;
-            }
-            set
-            {
-                if (SetProperty(ref _shares, value))
-                {
-                    this.OnPropertyChanged(() => this.MarketValue);
-                    this.OnPropertyChanged(() => this.GainLossPercent);
-                }
-            }
-        }
-
-
-        private decimal _currentPrice;
 
         public decimal CurrentPrice
         {
@@ -80,25 +45,44 @@ namespace StockTraderRI.Modules.Position.PositionSummary
             {
                 if (SetProperty(ref _currentPrice, value))
                 {
-                    this.OnPropertyChanged(() => this.MarketValue);
-                    this.OnPropertyChanged(() => this.GainLossPercent);
+                    this.RaisePropertyChanged(nameof(this.MarketValue));
+                    this.RaisePropertyChanged(nameof(this.GainLossPercent));
                 }
             }
         }
 
-        public decimal MarketValue
+        public decimal GainLossPercent { get => ((CurrentPrice * Shares - CostBasis) * 100 / CostBasis); }
+
+        public decimal MarketValue { get => (_shares * _currentPrice); }
+
+        public long Shares
         {
             get
             {
-                return (_shares * _currentPrice);
+                return _shares;
+            }
+            set
+            {
+                if (SetProperty(ref _shares, value))
+                {
+                    this.RaisePropertyChanged(nameof(MarketValue));
+                    this.RaisePropertyChanged(nameof(GainLossPercent));
+                }
             }
         }
 
-        public decimal GainLossPercent
+        public string TickerSymbol
         {
-            get
+            get => _tickerSymbol;
+
+            set
             {
-                return ((CurrentPrice * Shares - CostBasis) * 100 / CostBasis);
+                if (value == null)
+                {
+                    value = string.Empty;
+                }
+
+                SetProperty(ref _tickerSymbol, value);
             }
         }
     }

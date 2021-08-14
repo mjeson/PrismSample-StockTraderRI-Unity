@@ -9,15 +9,7 @@ namespace StockTraderRI
     {
         public Shell()
         {
-            InitializeComponent();
-        }
-
-        ShellViewModel ViewModel
-        {
-            set
-            {
-                this.DataContext = value;
-            }
+            this.InitializeComponent();
         }
     }
 }

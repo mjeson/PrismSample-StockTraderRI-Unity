@@ -1,19 +1,26 @@
 ﻿using Prism.Commands;
+using StockTraderRI.Infrastructure.Interfaces;
 
 namespace StockTraderRI.Infrastructure
 {
-
     public static class StockTraderRICommands
     {
-        private static CompositeCommand submitOrderCommand = new CompositeCommand(true);
+        private static CompositeCommand addToWatchListCommand = new CompositeCommand();
+        private static CompositeCommand cancelAllOrdersCommand = new CompositeCommand();
         private static CompositeCommand cancelOrderCommand = new CompositeCommand(true);
         private static CompositeCommand submitAllOrdersCommand = new CompositeCommand();
-        private static CompositeCommand cancelAllOrdersCommand = new CompositeCommand();
+        private static CompositeCommand submitOrderCommand = new CompositeCommand(true);
 
-        public static CompositeCommand SubmitOrderCommand
+        public static CompositeCommand AddToWatchListCommand
         {
-            get { return submitOrderCommand; }
-            set { submitOrderCommand = value; }
+            get { return addToWatchListCommand; }
+            set { addToWatchListCommand = value; }
+        }
+
+        public static CompositeCommand CancelAllOrdersCommand
+        {
+            get { return cancelAllOrdersCommand; }
+            set { cancelAllOrdersCommand = value; }
         }
 
         public static CompositeCommand CancelOrderCommand
@@ -28,33 +35,10 @@ namespace StockTraderRI.Infrastructure
             set { submitAllOrdersCommand = value; }
         }
 
-        public static CompositeCommand CancelAllOrdersCommand
+        public static CompositeCommand SubmitOrderCommand
         {
-            get { return cancelAllOrdersCommand; }
-            set { cancelAllOrdersCommand = value; }
-        }
-    }
-
-    public class StockTraderRICommandProxy
-    {
-        virtual public CompositeCommand SubmitOrderCommand
-        {
-            get { return StockTraderRICommands.SubmitOrderCommand; }
-        }
-
-        virtual public CompositeCommand CancelOrderCommand
-        {
-            get { return StockTraderRICommands.CancelOrderCommand; }
-        }
-
-        virtual public CompositeCommand SubmitAllOrdersCommand
-        {
-            get { return StockTraderRICommands.SubmitAllOrdersCommand; }
-        }
-
-        virtual public CompositeCommand CancelAllOrdersCommand
-        {
-            get { return StockTraderRICommands.CancelAllOrdersCommand; }
+            get { return submitOrderCommand; }
+            set { submitOrderCommand = value; }
         }
     }
 }

@@ -1,41 +1,30 @@
 ﻿using System.Windows;
-using Prism.Modularity;
+using Prism.Ioc;
 using Prism.Unity;
 
 namespace StockTraderRI
 {
-    public class StockTraderRIBootstrapper : UnityBootstrapper
+    public class StockTraderRIBootstrapper : PrismBootstrapper
     {
-        protected override void ConfigureModuleCatalog()
-        {
-            base.ConfigureModuleCatalog();
-
-            ModuleCatalog moduleCatalog = (ModuleCatalog)this.ModuleCatalog;
-            moduleCatalog.AddModule(typeof(StockTraderRI.Modules.Market.MarketModule));
-            moduleCatalog.AddModule(typeof(StockTraderRI.Modules.Position.PositionModule));
-            moduleCatalog.AddModule(typeof(StockTraderRI.Modules.Watch.WatchModule));
-            moduleCatalog.AddModule(typeof(StockTraderRI.Modules.News.NewsModule));
-        }
-
         protected override DependencyObject CreateShell()
         {
+            //TODO: To remove -> must be done in extra method from base class
+            //this.Container.RegisterType<IStockTraderRICommandProxy, StockTraderRICommandProxy>(new ContainerControlledLifetimeManager());
             // Use the container to create an instance of the shell.
-            Shell view = this.Container.TryResolve<Shell>();
+            Shell view = this.Container.Resolve<Shell>();
             view.DataContext = new ShellViewModel();
             return view;
         }
 
-        protected override void InitializeShell()
-        {
-            base.InitializeShell();
-            App.Current.MainWindow = (Window)this.Shell;
-            App.Current.MainWindow.Show();
-        }
+        //protected override void InitializeShell()
+        //{
+        //    base.InitializeShell();
+        //    App.Current.MainWindow = (Window)this.Shell;
+        //    App.Current.MainWindow.Show();
+        //}
 
-        protected override Prism.Regions.IRegionBehaviorFactory ConfigureDefaultRegionBehaviors()
+        protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            var factory = base.ConfigureDefaultRegionBehaviors();
-            return factory;
         }
     }
 }

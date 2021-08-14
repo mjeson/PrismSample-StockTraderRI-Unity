@@ -19,7 +19,7 @@ namespace StockTraderRI.Modules.News.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -74,7 +74,7 @@ namespace StockTraderRI.Modules.News.Properties {
         ///&lt;NewsItems xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;
         ///  &lt;NewsItem TickerSymbol=&quot;STOCK0&quot; IconUri=&quot;/StockTraderRI.Modules.News;Component/Data/Images/Annotation_New.png&quot; PublishedDate=&quot;3/31/2008&quot;&gt;
         ///    &lt;Title&gt;Consolidated Consolidates&lt;/Title&gt;
-        ///    &lt;Body&gt;It seems as though investors and the market in general approve of the changes at the top of Consolidated Holdings&amp;apos; (Stock0) board this week. New CEO Isabella Pric [rest of string was truncated]&quot;;.
+        ///    &lt;Body&gt;It seems as though investors and the market in general approve of the changes at the top of Consolidated Holdings&amp;apos; (Stock0) board this week. New CEO Isabella  [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string News {
             get {

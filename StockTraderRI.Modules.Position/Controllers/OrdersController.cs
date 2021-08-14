@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using Prism.Commands;
+using Prism.Ioc;
 using Prism.Regions;
-using Microsoft.Practices.ServiceLocation;
 using StockTraderRI.Infrastructure;
 using StockTraderRI.Infrastructure.Interfaces;
 using StockTraderRI.Infrastructure.Models;
@@ -17,9 +17,9 @@ namespace StockTraderRI.Modules.Position.Controllers
 {
     public class OrdersController : IOrdersController
     {
-        private IRegionManager _regionManager;
         private readonly StockTraderRICommandProxy commandProxy;
         private IAccountPositionService _accountPositionService;
+        private IRegionManager _regionManager;
 
         public OrdersController(IRegionManager regionManager, StockTraderRICommandProxy commandProxy, IAccountPositionService accountPositionService)
         {
@@ -38,14 +38,50 @@ namespace StockTraderRI.Modules.Position.Controllers
             commandProxy.SubmitAllOrdersCommand.RegisterCommand(SubmitAllVoteOnlyCommand);
         }
 
-        void OnSellExecuted(string parameter)
-        {
-            StartOrder(parameter, TransactionType.Sell);
-        }
+        public DelegateCommand<string> BuyCommand { get; private set; }
 
-        void OnBuyExecuted(string parameter)
+        public DelegateCommand<string> SellCommand { get; private set; }
+
+        public DelegateCommand SubmitAllVoteOnlyCommand { get; private set; }
+
+        private List<IOrderCompositeViewModel> OrderModels { get; set; }
+
+        virtual protected void StartOrder(string tickerSymbol, TransactionType transactionType)
         {
-            StartOrder(parameter, TransactionType.Buy);
+            if (String.IsNullOrEmpty(tickerSymbol))
+            {
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, Resources.StringCannotBeNullOrEmpty, "tickerSymbol"));
+            }
+            this.ShowOrdersView();
+
+            IRegion ordersRegion = _regionManager.Regions[RegionNames.OrdersRegion];
+
+            // TODO@GhZe: var orderCompositeViewModel = ServiceLocator.Current.GetInstance<IOrderCompositeViewModel>();
+            var orderCompositeViewModel = ContainerLocator.Container.Resolve<IOrderCompositeViewModel>();
+            orderCompositeViewModel.TransactionInfo = new TransactionInfo(tickerSymbol, transactionType);
+            orderCompositeViewModel.CloseViewRequested += delegate
+            {
+                OrderModels.Remove(orderCompositeViewModel);
+                commandProxy.SubmitAllOrdersCommand.UnregisterCommand(orderCompositeViewModel.SubmitCommand);
+                commandProxy.CancelAllOrdersCommand.UnregisterCommand(orderCompositeViewModel.CancelCommand);
+                commandProxy.SubmitOrderCommand.UnregisterCommand(orderCompositeViewModel.SubmitCommand);
+                commandProxy.CancelOrderCommand.UnregisterCommand(orderCompositeViewModel.CancelCommand);
+                ordersRegion.Remove(orderCompositeViewModel);
+                if (ordersRegion.Views.Count() == 0)
+                {
+                    this.RemoveOrdersView();
+                }
+            };
+
+            ordersRegion.Add(orderCompositeViewModel);
+            OrderModels.Add(orderCompositeViewModel);
+
+            commandProxy.SubmitAllOrdersCommand.RegisterCommand(orderCompositeViewModel.SubmitCommand);
+            commandProxy.CancelAllOrdersCommand.RegisterCommand(orderCompositeViewModel.CancelCommand);
+            commandProxy.SubmitOrderCommand.RegisterCommand(orderCompositeViewModel.SubmitCommand);
+            commandProxy.CancelOrderCommand.RegisterCommand(orderCompositeViewModel.CancelCommand);
+
+            ordersRegion.Activate(orderCompositeViewModel);
         }
 
         virtual protected bool SubmitAllCanExecute()
@@ -84,42 +120,14 @@ namespace StockTraderRI.Modules.Position.Controllers
             return true;
         }
 
-        virtual protected void StartOrder(string tickerSymbol, TransactionType transactionType)
+        private void OnBuyExecuted(string parameter)
         {
-            if (String.IsNullOrEmpty(tickerSymbol))
-            {
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, Resources.StringCannotBeNullOrEmpty, "tickerSymbol"));
-            }
-            this.ShowOrdersView();
+            StartOrder(parameter, TransactionType.Buy);
+        }
 
-            IRegion ordersRegion = _regionManager.Regions[RegionNames.OrdersRegion];
-
-            var orderCompositeViewModel = ServiceLocator.Current.GetInstance<IOrderCompositeViewModel>();
-
-            orderCompositeViewModel.TransactionInfo = new TransactionInfo(tickerSymbol, transactionType);
-            orderCompositeViewModel.CloseViewRequested += delegate
-            {
-                OrderModels.Remove(orderCompositeViewModel);
-                commandProxy.SubmitAllOrdersCommand.UnregisterCommand(orderCompositeViewModel.SubmitCommand);
-                commandProxy.CancelAllOrdersCommand.UnregisterCommand(orderCompositeViewModel.CancelCommand);
-                commandProxy.SubmitOrderCommand.UnregisterCommand(orderCompositeViewModel.SubmitCommand);
-                commandProxy.CancelOrderCommand.UnregisterCommand(orderCompositeViewModel.CancelCommand);
-                ordersRegion.Remove(orderCompositeViewModel);
-                if (ordersRegion.Views.Count() == 0)
-                {
-                    this.RemoveOrdersView();
-                }
-            };
-
-            ordersRegion.Add(orderCompositeViewModel);
-            OrderModels.Add(orderCompositeViewModel);
-
-            commandProxy.SubmitAllOrdersCommand.RegisterCommand(orderCompositeViewModel.SubmitCommand);
-            commandProxy.CancelAllOrdersCommand.RegisterCommand(orderCompositeViewModel.CancelCommand);
-            commandProxy.SubmitOrderCommand.RegisterCommand(orderCompositeViewModel.SubmitCommand);
-            commandProxy.CancelOrderCommand.RegisterCommand(orderCompositeViewModel.CancelCommand);
-
-            ordersRegion.Activate(orderCompositeViewModel);
+        private void OnSellExecuted(string parameter)
+        {
+            StartOrder(parameter, TransactionType.Sell);
         }
 
         private void RemoveOrdersView()
@@ -140,21 +148,11 @@ namespace StockTraderRI.Modules.Position.Controllers
             object ordersView = region.GetView("OrdersView");
             if (ordersView == null)
             {
-                ordersView = ServiceLocator.Current.GetInstance<IOrdersView>();
+                ordersView = ContainerLocator.Container.Resolve<IOrdersView>();
                 region.Add(ordersView, "OrdersView");
             }
 
             region.Activate(ordersView);
         }
-
-        #region IOrdersController Members
-
-        public DelegateCommand<string> BuyCommand { get; private set; }
-        public DelegateCommand<string> SellCommand { get; private set; }
-        public DelegateCommand SubmitAllVoteOnlyCommand { get; private set; }
-
-        private List<IOrderCompositeViewModel> OrderModels { get; set; }
-
-        #endregion
     }
 }

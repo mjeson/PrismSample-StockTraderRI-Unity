@@ -1,0 +1,100 @@
+
+
+<project name="StockTraderRI" default="compile">
+<!-- Here are my variables settings -->
+<property name="MSBuildPath_old" value="${framework::get-tool-path('msbuild.exe')}"/>
+
+<property name="MSBuildPath_OLD_FOR_6" value="C:\Program Files (x86)\MSBuild\14.0\Bin\MSBUILD.exe"/>
+<property name="MSBuildPathProfessional" value="C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\MSBuild\15.0\Bin\MSBUILD.exe"/>
+<property name="MSBuildPathEntreprise" value="C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\Bin\MSBUILD.exe"/>
+<property name="WixTargetsPath" value="C:\Program Files (x86)\WiX Toolset v3.11\bin"/>
+
+<property name="src-dir" value="${path::get-full-path('src')}" /> 
+ 
+
+<property name="Platform" value="Any CPU"/>
+<property name="current-dir" value="${directory::get-current-directory()}"/>
+<property name="obj-dir" value="${directory::get-current-directory()}"/>
+<property name="bin-dir" value="${path::combine(current-dir,'StockTraderRI\bin')}"/>
+<property name="setup-dir" value="${path::combine(current-dir,'StockTraderRI.Setup')}"/>
+
+<property name="nantcontrib-dir"   value="${path::combine(current-dir, 'nantcontrib-0.92')}"   overwrite="false" />
+<property name="wixtools-dir"   value="${path::combine(current-dir, 'wixtools')}"   overwrite="false" />
+<property name="release-dir"   value="${path::combine(current-dir, 'wixtools')}"   overwrite="false" />
+
+<property name="SolutionFile" value="${path::combine(current-dir,'StockTraderRI.sln')}"/>
+<property name="DeleteBinAndObjFolder" value="${path::combine(current-dir,'DeleteBinAndObjFolder.bat')}"/>
+
+<property name="SolutionConfiguration" value="Debug"/>
+<property name="nancontrib-dll" value="${path::combine(nantcontrib-dir, 'NAnt.Contrib.Tasks.dll')}"/>
+<property name="nant-dir" value="${nant::get-base-directory()}"/>
+
+
+
+<!-- Writing some in console-->
+<echo message="${DeleteBinAndObjFolder}"/>
+
+<!-- Loading somw assemblies e.g. NAnt.Contrib.Tasks.dll-->
+<loadtasks assembly="${nancontrib-dll}"  /> 
+
+
+
+
+  <target name="showtime">
+    <echo message="target 1"/>
+	<echo message='${WixTargetsPath}/candle.exe' />
+  </target>
+
+  <target name="targ2" depends="showtime">
+    <echo message="target 2"/>
+  </target>
+
+ <!--Create a folder -->
+ <mkdir   dir="_TODTE" />
+
+
+ <target name="compile" depends="clean" >
+ <echo message="**********************BUILD START*****************"/>
+ <exec program="${MSBuildPathProfessional}">
+        <arg line='"${SolutionFile}"' />
+        <arg line='"/property:Configuration=${SolutionConfiguration}"' />
+		<arg line='"/property:Platform=${Platform}"' />
+        <arg value="/target:Rebuild" />
+        <arg value="/verbosity:normal" />
+ </exec>  
+ <echo message="**********************BUILD ENDE*****************"/>
+  <call target="msi" /> 
+ </target>
+
+  <!-- clean  e.g. if="${directory::exists('test')}" -->
+ <target name="clean"  if="${directory::exists('bin-dir')}">
+    <exec  program="${DeleteBinAndObjFolder}" failonerror="false"   >   
+	</exec>
+ </target>
+
+  <target name="clean.bin" >
+    <exec  program="${DeleteBinAndObjFolder}" failonerror="false"   >   
+	</exec>
+ </target>
+
+   <!-- creating msi using nant and wix -->
+ <target name="build-installer">     
+    <!-- for wix preprocessor so that the location of pleats files are propagated into the wxs -->  
+    <setenv name="pleats-dir" value="${release-dir}"/> 
+     <!--  <delete>            
+        <fileset>           
+            <include name="${wix.dir}/*.wixobj"/>
+    </fileset>          
+    </delete>     -->  
+    <exec program="${path::combine(wixtools-dir, 'candle.exe')}"   commandline="${path::combine(setup-dir,'Product.wxs')}" /> 
+    <exec  program="${path::combine(wixtools-dir, 'light.exe')}"  commandline="-out myInstaller.msi '${setup-dir}'/Product.wixobj" /> 
+</target> 
+
+ <target name="msi" depends="build-installer">
+  
+ 
+ </target>
+
+   
+
+</project>
